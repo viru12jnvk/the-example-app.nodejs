@@ -32,6 +32,12 @@ jobs:
           node-version: 16
           registry-url: https://npm.pkg.github.com/
       - run: npm ci
-      - run: npm publish
+      - name: SonarCloud Scan
+        uses: SonarSource/sonarcloud-github-action@master
+        env:
+          GITHUB_TOKEN: ${{ secrets.GIT_PAT }}  
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+      - run: npm test
         env:
           NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
+
